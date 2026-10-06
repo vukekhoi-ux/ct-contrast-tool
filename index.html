@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Abdominal CT Protocol (BSA-based)</title>
+  <title>VK-Contrast Pro • Abdomen CT Protocol & Safety</title>
   <style>
     :root {
       --primary: #00796b;
       --bg: #f0f5f5;
       --card: #ffffff;
       --text: #263238;
+      --danger: #c62828;
+      --warning: #ef6c00;
+      --success: #2e7d32;
     }
     * {
       box-sizing: border-box;
@@ -20,24 +23,46 @@
       background-color: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 16px;
+      padding: 14px;
       display: flex;
       justify-content: center;
     }
     .container {
       background: var(--card);
-      max-width: 450px;
+      max-width: 480px;
       width: 100%;
       padding: 20px;
       border-radius: 16px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
+    .app-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .brand-badge {
+      display: inline-block;
+      background: #e0f2f1;
+      color: #004d40;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      border: 1px solid #b2dfdb;
+    }
     h2 {
-      margin: 0 0 16px 0;
+      margin: 0 0 4px 0;
       color: #004d40;
       text-align: center;
-      font-size: 19px;
+      font-size: 18.5px;
       letter-spacing: 0.5px;
+    }
+    .app-subtitle {
+      font-size: 12px;
+      color: #546e7a;
+      margin-bottom: 12px;
     }
     .grid-2 {
       display: grid;
@@ -45,20 +70,20 @@
       gap: 10px;
     }
     .form-group {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     label {
       display: block;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       color: #37474f;
     }
     input, select {
       width: 100%;
-      height: 42px;
-      padding: 8px 12px;
-      font-size: 15px;
+      height: 40px;
+      padding: 6px 10px;
+      font-size: 14.5px;
       border: 1px solid #cfd8dc;
       border-radius: 8px;
       background-color: #fff;
@@ -82,13 +107,13 @@
       background: var(--primary);
       color: #fff;
       border: none;
-      height: 44px;
+      height: 42px;
       width: 100%;
       font-size: 15px;
       font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -99,10 +124,10 @@
     .bmi-badge {
       background: #e0f2f1;
       border: 1px solid #b2dfdb;
-      padding: 9px 12px;
+      padding: 8px 12px;
       border-radius: 8px;
-      font-size: 13px;
-      margin-bottom: 14px;
+      font-size: 12.5px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -112,7 +137,7 @@
       color: #004d40;
     }
     .result-box {
-      margin-top: 18px;
+      margin-top: 14px;
       background: #e0f2f1;
       border: 1px solid #80cbc4;
       border-radius: 12px;
@@ -121,40 +146,104 @@
     .result-item {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 14px;
+      margin-bottom: 7px;
+      font-size: 13.5px;
     }
     .result-value {
       font-weight: bold;
       color: #004d40;
     }
     .info-card {
-      margin-top: 10px;
-      padding: 9px 11px;
-      border-radius: 8px;
-      font-size: 12.5px;
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12px;
       line-height: 1.4;
       background-color: #ffffff;
       color: #004d40;
       border: 1px solid #b2dfdb;
     }
     .alert {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 12.5px;
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12px;
       line-height: 1.4;
       background-color: #fff8e1;
       color: #f57f17;
       border: 1px solid #ffe082;
+    }
+    .safety-panel {
+      margin-top: 14px;
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .safety-title {
+      font-weight: bold;
+      color: #b78103;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .app-footer {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid #cfd8dc;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #607d8b;
+    }
+    .disclaimer-box {
+      background: #fafafa;
+      border: 1px solid #cfd8dc;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 8px;
+      color: #546e7a;
+      line-height: 1.5;
+    }
+    .disclaimer-title {
+      font-weight: 700;
+      color: #37474f;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11.5px;
+    }
+    .references-box {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      color: #607d8b;
+      line-height: 1.45;
+    }
+    .copyright-line {
+      text-align: center;
+      font-size: 11.5px;
+      color: #78909c;
+    }
+    .copyright-line b {
+      color: #37474f;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>ABDOMEN CT PROTOCOL (BSA)</h2>
+  <div class="app-header">
+    <span class="brand-badge">VK-Contrast Pro • Clinical Decision Support</span>
+    <h2>ABDOMEN CT PROTOCOL (BSA)</h2>
+    <div class="app-subtitle">Cá thể hóa liều cản quang nhu mô theo BSA & Hiệu ứng K-edge</div>
+  </div>
 
+  <!-- 1. THÔNG SỐ BỆNH NHÂN -->
   <div class="grid-2">
     <div class="form-group">
       <label for="height">Chiều cao (cm):</label>
@@ -166,78 +255,105 @@
     </div>
   </div>
 
-  <!-- THANH HIỂN THỊ BMI VÀ GỢI Ý KVP -->
+  <!-- BMI THEO CHUẨN WHO CHÂU Á - THÁI BÌNH DƯƠNG -->
   <div class="bmi-badge">
-    <span>BMI: <span class="bmi-highlight" id="bmiValue">--</span> (<span id="bmiStatus">--</span>)</span>
-    <span style="font-size: 12px; color: #00695c;" id="bmiKvpSuggest">👉 Gợi ý: --</span>
+    <span>BMI (Asia-Pacific): <span class="bmi-highlight" id="bmiValue">--</span> (<span id="bmiStatus">--</span>)</span>
+    <span style="font-size: 11.5px; color: #00695c;" id="bmiKvpSuggest">Gợi ý: --</span>
   </div>
 
   <div class="form-group">
-    <label for="kvp">2. Điện thế bóng (kVp):</label>
+    <label for="kvp">Điện thế bóng quét (kVp):</label>
     <select id="kvp">
-      <option value="80">80 kVp (BMI gầy / Nhi khoa)</option>
-      <option value="90">90 kVp (Thể trạng trung bình nhỏ)</option>
-      <option value="100" selected>100 kVp (Tối ưu liều tia & cản quang)</option>
-      <option value="110">110 kVp (Thể trạng trung bình lớn)</option>
-      <option value="120">120 kVp (Chuẩn truyền thống / BN to)</option>
+      <option value="80">80 kVp (BMI &lt; 18.5 / Nhi khoa / Gầy)</option>
+      <option value="90">90 kVp (BMI 18.5 - 20.9 / Thể trạng nhỏ)</option>
+      <option value="100" selected>100 kVp (BMI 21.0 - 24.9 - Tối ưu liều tia & cản quang)</option>
+      <option value="110">110 kVp (BMI 25.0 - 27.9 / Thể trạng lớn)</option>
+      <option value="120">120 kVp (BMI ≥ 28.0 / Béo phì)</option>
     </select>
   </div>
 
   <div class="form-group">
-    <label for="doseRatio">3. Hệ số Iod mục tiêu theo BSA (gI/m²):</label>
+    <label for="doseRatio">Hệ số Iod mục tiêu theo BSA (gI/m²):</label>
     <input type="number" id="doseRatio" value="13.5" step="0.1" inputmode="decimal">
   </div>
 
-  <div class="form-group">
-    <label for="conc">4. Nồng độ thuốc cản quang (mgI/mL):</label>
-    <select id="conc">
-      <option value="300">300 mgI/mL (Omnipaque / Ultravist 300)</option>
-      <option value="320">320 mgI/mL (Visipaque 320)</option>
-      <option value="350" selected>350 mgI/mL (Omnipaque / Ultravist 350 / Iopamiro)</option>
-      <option value="370">370 mgI/mL (Ultravist 370 / Iopromide)</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="tinj">5. Thời gian tiêm cố định (s):</label>
-    <input type="number" id="tinj" value="25" min="20" max="40" inputmode="numeric">
+  <div class="grid-2">
+    <div class="form-group">
+      <label for="conc">Nồng độ (mgI/mL):</label>
+      <select id="conc">
+        <option value="300">300 mgI/mL (Omnipaque / Ultravist 300 / Xenetix 300)</option>
+        <option value="320">320 mgI/mL (Visipaque 320 - Đẳng trương)</option>
+        <option value="350" selected>350 mgI/mL (Omnipaque / Ultravist 350 / Iopamiro 370)</option>
+        <option value="370">370 mgI/mL (Ultravist 370 / Iopromide / Optiray 350)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="tinj">Thời gian tiêm cố định (s):</label>
+      <input type="number" id="tinj" value="25" min="20" max="40" inputmode="numeric">
+    </div>
   </div>
 
   <button class="btn" id="calcBtn" type="button">TÍNH TOÁN PROTOCOL</button>
 
+  <!-- KẾT QUẢ TÍNH TOÁN -->
   <div class="result-box" id="resultBox">
     <div class="result-item">
-      <span>Diện tích bề mặt cơ thể (BSA):</span>
-      <span class="result-value" id="resBSA">-- m²</span>
-    </div>
-    <div class="result-item">
-      <span>Cung lượng tim ước tính (CO):</span>
-      <span class="result-value" id="resCO">-- L/min</span>
+      <span>BSA (Mosteller) / CO ước tính:</span>
+      <span class="result-value"><span id="resBSA">--</span> m² | <span id="resCO">--</span> L/min</span>
     </div>
     <div class="result-item">
       <span>Tổng lượng Iod mục tiêu:</span>
       <span class="result-value" id="resIodine">-- gI</span>
     </div>
-    <hr style="border: none; border-top: 1px dashed #80cbc4; margin: 8px 0;">
-    <div class="result-item">
-      <span>Tổng lượng thuốc (Total Volume):</span>
-      <span class="result-value" id="resVolume">-- mL</span>
-    </div>
+    <hr style="border: none; border-top: 1px dashed #80cbc4; margin: 6px 0;">
     <div class="result-item">
       <span>Tốc độ tiêm (Flow Rate):</span>
-      <span class="result-value" id="resFlow">-- mL/s</span>
+      <span class="result-value" id="resFlow" style="font-size: 16px;">-- mL/s</span>
+    </div>
+    <div class="result-item">
+      <span>Tổng lượng thuốc (Total Volume):</span>
+      <span class="result-value" id="resVolume" style="font-size: 16px;">-- mL</span>
     </div>
     <div class="result-item">
       <span>Nước muối đuổi (Saline Chaser):</span>
-      <span class="result-value" id="resSaline">30 - 40 mL</span>
+      <span class="result-value" id="resSaline">30 - 40 mL (@ tốc độ tiêm thuốc)</span>
     </div>
 
     <!-- HỘP ĐÁNH GIÁ THỜI ĐIỂM QUÉT (TIMING) -->
     <div class="info-card" id="scanTimingAlert"></div>
 
-    <!-- HỘP CẢNH BÁO KIM LUỒN -->
+    <!-- CẢNH BÁO CỠ KIM -->
     <div class="alert" id="needleAlert"></div>
   </div>
+
+  <!-- 3. KHỐI AN TOÀN LÂM SÀNG BẮT BUỘC -->
+  <div class="safety-panel">
+    <div class="safety-title">🛡 CHECKLIST AN TOÀN TRƯỚC TIÊM (SAFETY AUDIT):</div>
+    • <b>Chức năng thận (eGFR):</b> Nếu eGFR &lt; 30 mL/min/1.73m² (hoặc đang AKI), chống chỉ định tương đối; nếu eGFR 30 - 44, bắt buộc bù dịch (Hydration) và giảm liều Iod.<br>
+    • <b>Metformin:</b> Tạm ngưng thuốc tại thời điểm chụp và 48h sau chụp nếu eGFR &lt; 45 hoặc chụp cấp cứu.<br>
+    • <b>Dị ứng:</b> Khai thác tiền sử hen phế quản nặng, sốc phản vệ cản quang trước đây (chuẩn bị sẵn phác đồ tiền mê nếu bắt buộc chụp).<br>
+    • <b>Đường tiêm:</b> Tĩnh mạch ngoại vi nếp khuỷu/cẳng tay to; kiểm tra thông tắc bằng nước muối trước khi kết nối máy tiêm áp lực.
+  </div>
+
+  <!-- CHÂN TRANG: ĐIỀU KHOẢN PHÁP LÝ & BẢN QUYỀN -->
+  <footer class="app-footer">
+    <div class="disclaimer-box">
+      <span class="disclaimer-title">⚖ MIỄN TRỪ TRÁCH NHIỆM Y KHOA (DISCLAIMER):</span>
+      Công cụ này được xây dựng cho mục đích đào tạo và hỗ trợ tham khảo lâm sàng, dựa trên các khuyến cáo y văn chuẩn (Mosteller BSA, SCCT Guidelines, AJR/JCAT). Thông số hiển thị không thay thế cho y lệnh bác sĩ chẩn đoán hình ảnh. Kỹ thuật viên và bác sĩ chịu trách nhiệm đánh giá toàn diện thể trạng người bệnh, tiền sử dị ứng và chức năng thận (eGFR) trước khi thực hiện tiêm thuốc.
+    </div>
+
+    <div class="references-box">
+      <b>📚 Nguồn y văn tham chiếu (Standard References):</b><br>
+      • <b>Parenchymal BSA Protocol:</b> Goshima S. et al., <i>Minimally Required Iodine Dose at Dynamic Hepatic CT</i>, AJR 2016; RSNA & JCAT Guidelines.<br>
+      • <b>Body Surface Area:</b> Mosteller RD., <i>Simplified calculation of body-surface area</i>, N Engl J Med 1987.<br>
+      • <b>Renal Safety & PC-AKI:</b> ACR Manual on Contrast Media & ESUR Contrast Media Guidelines.
+    </div>
+
+    <div class="copyright-line">
+      © 2026 <b>Vũ Kế Khôi-vukekhoi@gmail.com</b>. All rights reserved.<br>
+      Thiết kế & phát triển phục vụ tối ưu hóa chất lượng hình ảnh CT.
+    </div>
+  </footer>
 </div>
 
 <script>
@@ -249,7 +365,7 @@
   const tinjInput = document.getElementById('tinj');
   const calcBtn = document.getElementById('calcBtn');
 
-  // Tự động gán hệ số liều Iod chuẩn theo 5 mức kVp (80 - 120 kVp)
+  // Gán hệ số liều Iod chuẩn theo 5 mức kVp (80 - 120 kVp)
   function updateDoseFromKvp() {
     const kvp = kvpSelect.value;
     if (kvp === '80') doseRatioInput.value = '11.0';
@@ -267,7 +383,7 @@
     const conc = parseFloat(concSelect.value) || 350;
     const tinj = parseFloat(tinjInput.value) || 25;
 
-    // 1. Tính BMI và gợi ý kVp cho CT Bụng
+    // 1. Phân tầng BMI theo WHO Châu Á - Thái Bình Dương (WPRO)
     if (height > 0 && weight > 0) {
       const heightMeter = height / 100;
       const bmi = weight / (heightMeter * heightMeter);
@@ -275,53 +391,51 @@
 
       let status = '';
       let suggestKvp = '';
-      if (bmi < 21) {
-        status = 'Gầy / Nhỏ';
+      if (bmi < 18.5) {
+        status = 'Thiếu cân';
         suggestKvp = '👉 Gợi ý: <b>80 - 90 kVp</b>';
-      } else if (bmi <= 25.9) {
+      } else if (bmi <= 22.9) {
         status = 'Bình thường';
         suggestKvp = '👉 Gợi ý: <b>100 kVp</b>';
-      } else if (bmi <= 29.9) {
-        status = 'Thừa cân';
+      } else if (bmi <= 24.9) {
+        status = 'Tiền béo phì (Thừa cân)';
         suggestKvp = '👉 Gợi ý: <b>100 - 110 kVp</b>';
+      } else if (bmi <= 29.9) {
+        status = 'Béo phì độ I';
+        suggestKvp = '👉 Gợi ý: <b>110 - 120 kVp</b>';
       } else {
-        status = 'Béo phì';
+        status = 'Béo phì độ II';
         suggestKvp = '👉 Gợi ý: <b>120 kVp</b>';
       }
       document.getElementById('bmiStatus').innerText = status;
       document.getElementById('bmiKvpSuggest').innerHTML = suggestKvp;
 
-      // 2. Tính BSA (Mosteller) và CO ước tính
+      // 2. Tính BSA (Mosteller) và Cung lượng tim CO
       const bsa = Math.sqrt((height * weight) / 3600);
       const co = bsa * 3.0;
 
-      document.getElementById('resBSA').innerText = bsa.toFixed(2) + ' m²';
-      document.getElementById('resCO').innerText = co.toFixed(1) + ' L/min';
+      document.getElementById('resBSA').innerText = bsa.toFixed(2);
+      document.getElementById('resCO').innerText = co.toFixed(1);
 
       if (doseRatio > 0 && conc > 0 && tinj > 0) {
-        // 3. Tính Tổng Iod (gI) = BSA * Hệ số Iod (gI/m²)
+        // 3. Tính Tổng lượng Iod và Thể tích thuốc
         const totalIodine = bsa * doseRatio;
-
-        // 4. Tính Thể tích thuốc (mL) = (Tổng Iod * 1000) / Nồng độ
         const totalVolume = (totalIodine * 1000) / conc;
-
-        // 5. Tính Tốc độ bơm (mL/s) = Thể tích thuốc / Thời gian tiêm
         const flowRate = totalVolume / tinj;
 
-        // Cập nhật giao diện
         document.getElementById('resIodine').innerText = totalIodine.toFixed(1) + ' gI';
         document.getElementById('resVolume').innerText = Math.round(totalVolume) + ' mL';
         document.getElementById('resFlow').innerText = flowRate.toFixed(1) + ' mL/s';
 
-        // Gợi ý cửa sổ quét các thì CT bụng/gan
+        // 4. Hướng dẫn cửa sổ quét (Timing) các thì CT Bụng
         const timingBox = document.getElementById('scanTimingAlert');
         timingBox.style.display = 'block';
         timingBox.innerHTML = `⏱ <b>Gợi ý cửa sổ quét (Timing):</b><br>
-          • <b>Thì Động mạch muộn (Late Arterial):</b> Bắt đầu quét sau tiêm <b>35 - 40s</b> (hoặc Trigger ĐMC bụng đạt ngưỡng + 15s delay).<br>
-          • <b>Thì Tĩnh mạch cửa (Portal Venous):</b> Bắt đầu quét sau tiêm <b>65 - 70s</b> (tối ưu bắt ngấm nhu mô gan/tụy/thận).<br>
+          • <b>Thì Động mạch muộn (Late Arterial):</b> Bắt đầu quét sau tiêm <b>35 - 40s</b> (hoặc Bolus Tracking ĐMC bụng + 15s delay).<br>
+          • <b>Thì Tĩnh mạch cửa (Portal Venous):</b> Bắt đầu quét sau tiêm <b>65 - 70s</b> (bắt ngấm tối ưu nhu mô gan/tụy/thận).<br>
           • <b>Thì Cân bằng / Muộn (Equilibrium):</b> Quét sau tiêm <b>3 - 5 phút</b>.`;
 
-        // Cảnh báo cỡ kim luồn
+        // 5. Cảnh báo an toàn cỡ kim tiêm
         const needleBox = document.getElementById('needleAlert');
         needleBox.style.display = 'block';
         if (flowRate <= 2.5) {
@@ -336,15 +450,14 @@
       document.getElementById('bmiValue').innerText = '--';
       document.getElementById('bmiStatus').innerText = '--';
       document.getElementById('bmiKvpSuggest').innerHTML = '👉 Gợi ý: --';
-      document.getElementById('resBSA').innerText = '-- m²';
-      document.getElementById('resCO').innerText = '-- L/min';
+      document.getElementById('resBSA').innerText = '--';
+      document.getElementById('resCO').innerText = '--';
       document.getElementById('resIodine').innerText = '-- gI';
       document.getElementById('resVolume').innerText = '-- mL';
       document.getElementById('resFlow').innerText = '-- mL/s';
     }
   }
 
-  // Gắn sự kiện
   kvpSelect.addEventListener('change', updateDoseFromKvp);
   concSelect.addEventListener('change', calculateProtocol);
   heightInput.addEventListener('input', calculateProtocol);
@@ -353,7 +466,6 @@
   tinjInput.addEventListener('input', calculateProtocol);
   calcBtn.addEventListener('click', calculateProtocol);
 
-  // Kích hoạt tính toán khi nạp trang
   calculateProtocol();
 </script>
 
