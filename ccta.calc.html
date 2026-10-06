@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CCTA Contrast Protocol</title>
+  <style>
+    :root {
+      --primary: #1976d2;
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --text: #2c3e50;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: var(--card);
+      max-width: 450px;
+      width: 100%;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      margin: 0 0 16px 0;
+      color: #0d47a1;
+      text-align: center;
+      font-size: 19px;
+      letter-spacing: 0.5px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #37474f;
+    }
+    input, select {
+      width: 100%;
+      height: 42px;
+      padding: 8px 12px;
+      font-size: 15px;
+      border: 1px solid #cfd8dc;
+      border-radius: 8px;
+      background-color: #fff;
+      color: #263238;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    select {
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%231976d2" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 18px;
+      padding-right: 32px;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+    }
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      height: 44px;
+      width: 100%;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn:active {
+      background: #0d47a1;
+    }
+    .bmi-badge {
+      background: #e3f2fd;
+      border: 1px solid #bbdefb;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bmi-highlight {
+      font-weight: bold;
+      color: #0d47a1;
+    }
+    .result-box {
+      margin-top: 18px;
+      background: #f1f8fe;
+      border: 1px solid #bbdefb;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .result-value {
+      font-weight: bold;
+      color: #0d47a1;
+    }
+    .alert {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      line-height: 1.4;
+      background-color: #fff8e1;
+      color: #f57f17;
+      border: 1px solid #ffe082;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>CCTA CONTRAST PROTOCOL</h2>
+
+  <div class="grid-2">
+    <div class="form-group">
+      <label for="height">Chiều cao (cm):</label>
+      <input type="number" id="height" value="165" min="100" max="220" inputmode="decimal">
+    </div>
+    <div class="form-group">
+      <label for="weight">Cân nặng (kg):</label>
+      <input type="number" id="weight" value="65" min="30" max="150" inputmode="decimal">
+    </div>
+  </div>
+
+  <!-- THANH HIỂN THỊ BMI VÀ GỢI Ý KVP -->
+  <div class="bmi-badge">
+    <span>BMI: <span class="bmi-highlight" id="bmiValue">--</span> (<span id="bmiStatus">--</span>)</span>
+    <span style="font-size: 12px; color: #1565c0;" id="bmiKvpSuggest">👉 Gợi ý: --</span>
+  </div>
+
+  <div class="form-group">
+    <label for="kvp">2. Điện thế bóng (kVp):</label>
+    <select id="kvp">
+      <option value="80">80 kVp (BMI gầy / Low-dose)</option>
+      <option value="90">90 kVp (Thể trạng trung bình nhỏ)</option>
+      <option value="100" selected>100 kVp (Chuẩn tối ưu)</option>
+      <option value="110">110 kVp (Thể trạng trung bình lớn)</option>
+      <option value="120">120 kVp (Thể trạng to / Béo phì)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="widr">3. Hệ số W-IDR (gI/kg/s):</label>
+    <input type="number" id="widr" value="0.022" step="0.001" inputmode="decimal">
+  </div>
+
+  <div class="form-group">
+    <label for="conc">4. Nồng độ thuốc cản quang (mgI/mL):</label>
+    <select id="conc">
+      <option value="300">300 mgI/mL (Omnipaque / Ultravist 300)</option>
+      <option value="320">320 mgI/mL (Visipaque 320)</option>
+      <option value="350" selected>350 mgI/mL (Omnipaque / Ultravist 350 / Iopamiro)</option>
+      <option value="370">370 mgI/mL (Ultravist 370 / Iopromide)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="tinj">5. Thời gian tiêm mong muốn (s):</label>
+    <input type="number" id="tinj" value="11" min="8" max="25" inputmode="numeric">
+  </div>
+
+  <button class="btn" id="calcBtn" type="button">TÍNH TOÁN PROTOCOL</button>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-item">
+      <span>Tốc độ tiêm (Flow Rate):</span>
+      <span class="result-value" id="resFlow">-- mL/s</span>
+    </div>
+    <div class="result-item">
+      <span>Tổng lượng thuốc (Contrast):</span>
+      <span class="result-value" id="resVolume">-- mL</span>
+    </div>
+    <div class="result-item">
+      <span>Nước muối đuổi (Saline Chaser):</span>
+      <span class="result-value" id="resSaline">40 - 50 mL</span>
+    </div>
+    <div class="result-item">
+      <span>Đậm độ dự kiến:</span>
+      <span class="result-value">350 - 450 HU</span>
+    </div>
+
+    <div class="alert" id="needleAlert"></div>
+  </div>
+</div>
+
+<script>
+  const heightInput = document.getElementById('height');
+  const weightInput = document.getElementById('weight');
+  const kvpSelect = document.getElementById('kvp');
+  const widrInput = document.getElementById('widr');
+  const concSelect = document.getElementById('conc');
+  const tinjInput = document.getElementById('tinj');
+  const calcBtn = document.getElementById('calcBtn');
+
+  // Cập nhật W-IDR tự động theo từng mức kVp
+  function updateWidrFromKvp() {
+    const kvp = kvpSelect.value;
+    if (kvp === '80') widrInput.value = '0.018';
+    else if (kvp === '90') widrInput.value = '0.020';
+    else if (kvp === '100') widrInput.value = '0.022';
+    else if (kvp === '110') widrInput.value = '0.025';
+    else if (kvp === '120') widrInput.value = '0.028';
+    calculateProtocol();
+  }
+
+  // Tính toán phác đồ và BMI
+  function calculateProtocol() {
+    const height = parseFloat(heightInput.value) || 0;
+    const weight = parseFloat(weightInput.value) || 0;
+    const widr = parseFloat(widrInput.value) || 0;
+    const conc = parseFloat(concSelect.value) || 350;
+    const tinj = parseFloat(tinjInput.value) || 0;
+
+    // 1. Tính BMI và cập nhật nhãn gợi ý kVp
+    if (height > 0 && weight > 0) {
+      const heightMeter = height / 100;
+      const bmi = weight / (heightMeter * heightMeter);
+      document.getElementById('bmiValue').innerText = bmi.toFixed(1);
+
+      let status = '';
+      let suggestKvp = '';
+      if (bmi < 21) {
+        status = 'Gầy / Nhỏ';
+        suggestKvp = '👉 Gợi ý: <b>80 - 90 kVp</b>';
+      } else if (bmi <= 25.9) {
+        status = 'Bình thường';
+        suggestKvp = '👉 Gợi ý: <b>100 kVp</b>';
+      } else if (bmi <= 29.9) {
+        status = 'Thừa cân';
+        suggestKvp = '👉 Gợi ý: <b>100 - 110 kVp</b>';
+      } else {
+        status = 'Béo phì';
+        suggestKvp = '👉 Gợi ý: <b>120 kVp</b>';
+      }
+      document.getElementById('bmiStatus').innerText = status;
+      document.getElementById('bmiKvpSuggest').innerHTML = suggestKvp;
+    } else {
+      document.getElementById('bmiValue').innerText = '--';
+      document.getElementById('bmiStatus').innerText = '--';
+      document.getElementById('bmiKvpSuggest').innerHTML = '👉 Gợi ý: --';
+    }
+
+    if (weight <= 0 || widr <= 0 || conc <= 0 || tinj <= 0) return;
+
+    // 2. IDR (gI/s) = Cân nặng * W-IDR
+    const totalIdr = weight * widr;
+
+    // 3. Tốc độ bơm (mL/s) = IDR / (Nồng độ / 1000)
+    const flowRate = totalIdr / (conc / 1000);
+
+    // 4. Thể tích thuốc (mL) = Tốc độ bơm * Thời gian tiêm
+    const totalVolume = flowRate * tinj;
+
+    // Hiển thị kết quả
+    document.getElementById('resFlow').innerText = flowRate.toFixed(1) + ' mL/s';
+    document.getElementById('resVolume').innerText = Math.round(totalVolume) + ' mL';
+
+    // Cảnh báo cỡ kim an toàn
+    const needleBox = document.getElementById('needleAlert');
+    if (flowRate <= 3.5) {
+      needleBox.innerHTML = '💉 <b>Cỡ kim an toàn:</b> Kim <b>22G (xanh dương)</b> hoặc 20G. Áp lực dòng chảy rất êm.';
+    } else if (flowRate <= 5.0) {
+      needleBox.innerHTML = '💉 <b>Cỡ kim an toàn:</b> Tối thiểu kim <b>20G (hồng)</b> tĩnh mạch nếp khuỷu/cẳng tay to.';
+    } else {
+      needleBox.innerHTML = '⚠ <b>Lưu ý:</b> Tốc độ cao! Bắt buộc kim <b>18G (xanh lá)</b> và làm ấm thuốc để tránh quá áp lực máy tiêm.';
+    }
+  }
+
+  // Lắng nghe sự kiện để chạy mượt cả trên Mobile & Desktop
+  kvpSelect.addEventListener('change', updateWidrFromKvp);
+  concSelect.addEventListener('change', calculateProtocol);
+  heightInput.addEventListener('input', calculateProtocol);
+  weightInput.addEventListener('input', calculateProtocol);
+  widrInput.addEventListener('input', calculateProtocol);
+  tinjInput.addEventListener('input', calculateProtocol);
+  calcBtn.addEventListener('click', calculateProtocol);
+
+  // Chạy tính toán ngay khi tải trang
+  calculateProtocol();
+</script>
+
+</body>
+</html>
